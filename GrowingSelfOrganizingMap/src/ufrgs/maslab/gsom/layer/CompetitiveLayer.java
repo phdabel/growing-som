@@ -124,6 +124,7 @@ private static final long serialVersionUID = -2770439268611932205L;
      *  remove useless neurons
      */
     public void cleanNetwork(){
+    	/*
     	ArrayList<N> deletePositions = new ArrayList<N>();
     	for(N neurons : this.values())
     	{
@@ -133,27 +134,27 @@ private static final long serialVersionUID = -2770439268611932205L;
     			deletePositions.add(neurons);    			
     		}
     	}
-    	/*for(N neurons : this.values())
-		{
-    		if(neurons.spreadCounter > 3){
-    			if(neurons.getNeighbours().isEmpty())
-    			{
-    				deletePositions.add(neurons);	
-    			}
-    			else if((neurons.error > -1 && neurons.error < 1) && neurons.getNeighbours().size() > 1)
-	    		{
-	    			deletePositions.add(neurons);
-	    		}else if(neurons.hits == 0 && neurons.getNeighbours().size() == 1)
-	    		{
-	    			deletePositions.add(neurons);
-	    		}
-    		}
-		}*/
+    	//for(N neurons : this.values())
+		//{
+    	//	if(neurons.spreadCounter > 3){
+    	//		if(neurons.getNeighbours().isEmpty())
+    	//		{
+    	//			deletePositions.add(neurons);	
+    	//		}
+    	//		else if((neurons.error > -1 && neurons.error < 1) && neurons.getNeighbours().size() > 1)
+	    //		{
+	    //			deletePositions.add(neurons);
+	    //		}else if(neurons.hits == 0 && neurons.getNeighbours().size() == 1)
+	    //		{
+	    //			deletePositions.add(neurons);
+	    //		}
+    	//	}
+		//}
     	for(N n : deletePositions)
     	{
     		this.removeNeuron(n);
     	}
-    	
+    	*/
     }
 	
 	/**

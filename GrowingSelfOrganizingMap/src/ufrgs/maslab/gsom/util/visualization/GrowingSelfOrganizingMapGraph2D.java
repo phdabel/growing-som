@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Paint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -15,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+
 import javax.swing.JButton;
 import javax.swing.JRootPane;
 
@@ -70,7 +72,7 @@ public class GrowingSelfOrganizingMapGraph2D extends javax.swing.JApplet {
 
     protected JButton switchLayout;
 
-    public static final int EDGE_LENGTH = 50;
+    public static final int EDGE_LENGTH = 10;
     
     public GrowingSelfOrganizingMapGraph2D(CompetitiveLayer<Neuron> map)
     {
@@ -104,13 +106,13 @@ public class GrowingSelfOrganizingMapGraph2D extends javax.swing.JApplet {
 
         ObservableGraph<Neuron,Number> og = new ObservableGraph<Neuron,Number>(ig);
         
-        og.addGraphEventListener(new GraphEventListener<Neuron,Number>() {
+        /*og.addGraphEventListener(new GraphEventListener<Neuron,Number>() {
 
 			@Override
 			public void handleGraphEvent(GraphEvent<Neuron, Number> evt) {
 				System.err.println("got "+evt);
 
-			}});
+			}});*/
         
         this.g = og;
         //create a graphdraw
@@ -129,8 +131,36 @@ public class GrowingSelfOrganizingMapGraph2D extends javax.swing.JApplet {
         
         vv.setGraphMouse(graphMouse);
         graphMouse.add(new MousePlugin());
-
-
+        
+     // Transformer maps the vertex number to a vertex property
+        Transformer<Neuron,Paint> vertexColor = new Transformer<Neuron,Paint>() {
+            public Paint transform(Neuron i) {
+            	switch(i.cluster)
+            	{
+            		case 0:
+            			return Color.BLACK;
+            		case 1:
+            			return Color.GREEN;
+            		case 2:
+            			return Color.BLUE;
+            		case 3:
+            			return Color.RED;
+            		case 4:
+            			return Color.YELLOW;
+            		case 5:
+            			return Color.GRAY;
+            		case 6:
+            			return Color.WHITE;
+            		case 7:
+            			return Color.MAGENTA;
+            		default:
+            			return Color.CYAN;
+            			
+            	}
+            }
+        };
+        vv.getRenderContext().setVertexFillPaintTransformer(vertexColor);
+        
         vv.addKeyListener(graphMouse.getModeKeyListener());
         
         vv.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.CNTR);

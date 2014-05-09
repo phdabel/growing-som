@@ -17,6 +17,8 @@ public class Neuron {
 	
 	public boolean spread = false;
 	
+	public int cluster = 0;
+	
 	public double[] attributeError;
 	
 	public double[] attributeValue;
@@ -41,6 +43,11 @@ public class Neuron {
 	public Neuron(Position p)
 	{
 		this.setPosition(p);
+	}
+	
+	public void setCluster(int c)
+	{
+		this.cluster = c;
 	}
 	
 	@Override
