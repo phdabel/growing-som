@@ -2,17 +2,11 @@ package ufrgs.maslab.gsom.util.visualization;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Paint;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.media.j3d.Appearance;
-import javax.media.j3d.Material;
 import javax.swing.JPanel;
-import javax.vecmath.Color3f;
 import javax.vecmath.Point3f;
-
-import org.apache.commons.collections15.Transformer;
 
 import ufrgs.maslab.gsom.layer.CompetitiveLayer;
 import ufrgs.maslab.gsom.neuron.Neuron;
@@ -23,8 +17,8 @@ import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.picking.PickedState;
-import edu.uci.ics.jung.visualization3d.PluggableRenderContext;
 import edu.uci.ics.jung.visualization3d.VisualizationViewer;
+import edu.uci.ics.jung.visualization3d.decorators.PickableVertexPaintTransformer;
 
 public class SelfOrganizingMapGraph3D extends JPanel {
 	
@@ -73,12 +67,14 @@ public class SelfOrganizingMapGraph3D extends JPanel {
 
 		layout.initialize();
 
-		PluggableRenderContext<Neuron, Integer> render = new PluggableRenderContext<Neuron, Integer>();
+		//PluggableRenderContext<Neuron, Integer> render = new PluggableRenderContext<Neuron, Integer>();
+		
 		VisualizationViewer<Neuron,Number> vv = 
 				new VisualizationViewer<Neuron,Number>();
-				
+		
 		
 		final PickedState<Neuron> p = vv.getRenderContext().getPickedVertexState();
+		
 		p.addItemListener(new ItemListener(){
 
 			@Override
@@ -135,85 +131,13 @@ public class SelfOrganizingMapGraph3D extends JPanel {
 			
 		});
 		
-		Transformer<Neuron, Point3f> vertexColor = new Transformer<Neuron, Point3f>(){
-			@Override
-			public Point3f transform(Neuron i){
-				Point3f p = new Point3f();
-				p.x = i.getPosition().getAxisPosition().get(0);
-				p.y = i.getPosition().getAxisPosition().get(1);
-				if(i.getPosition().getDimension() == 3){
-					p.z = i.getPosition().getAxisPosition().get(2);
-				}else
-				{
-					p.z = 0;
-				}
-				return p;
-				/*
-				float r = 0.0f;
-				float g = 0.0f;
-				float b = 1.0f;
-				if(i.label.contains(0)){
-					g = g * 0.2f;
-					b = b * 0.3f;
-				}else if(i.label.contains(1)){
-					r = r * 0.1f;
-					b = b * 0.3f;
-				}else if(i.label.contains(2))
-				{
-					r = r * 0.1f;
-					g = g * 0.2f;
-				}else if(i.label.contains(3))
-				{
-					g = g * 0.2f;
-					b = b * 0.3f;
-				}else if(i.label.contains(4))
-				{
-					r = r * 0.1f;
-					b = b * 0.3f;
-				}else if(i.label.contains(5)){
-					r = r * 0.1f;
-					g = g * 0.2f;
-				}
-				System.out.println(r+" - "+b+" - "+g);
-				Color3f color = new Color3f();
-				color.set(r, g, b);
-				return color;*/
 				
-			}
-		};
 		
 		
-		//vv.setSize(5000, 5000);
-		Transformer<Neuron,Appearance> vertexShapeTransformer = new Transformer<Neuron,Appearance>() {
- 			@Override
-			public Appearance transform(Neuron n) {
- 				
- 				
- 				Color3f lightGray = new Color3f(0.7f, 0.7f, 0.7f);
- 				Color3f black = new Color3f(0,0,0);
- 				Color3f red = new Color3f(1, 0, 0);
- 				
- 				
- 				//Material redMaterial = new Material(red, black,red, red, 100.0f);
- 				Material blackMaterial = new Material(lightGray, black,black, lightGray, 10.0f);
- 				Appearance blackLook = new Appearance();
- 				//Appearance redLook = new Appearance();
- 				//redLook.setMaterial(redMaterial);
- 				blackLook.setMaterial(blackMaterial);
- 				//if(n.hits == 0)
- 					return blackLook;
-				//return redLook;
-				
- 			}
-		};
-		
-		vv.getRenderContext().setVertexAppearanceTransformer(vertexShapeTransformer);
 		vv.getRenderContext().setVertexStringer(new ToStringLabeller<Neuron>());
 		
-		
-		//layout.setInitializer(vertexColor);
 		for(Neuron n : layout.getVertices()){
-			
+			//vv.getRenderContext().getVertexAppearanceTransformer().transform(n);
 			layout.transform(n);
 			
 		}
